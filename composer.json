@@ -2,7 +2,6 @@
     "name": "jeromeborg/cart",
     "description": "A complete cart for Laravel",
     "type": "library",
-    "version": "0.1.0",
     "require": {
         "php": "^8.2",
         "illuminate/support": "^12.0|^13.0",

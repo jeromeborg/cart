@@ -86,7 +86,12 @@ class Cart
 
     protected function getItems(): array
     {
-        return $this->session->get(self::SESSION_KEY, []);
+        $items = $this->session->get(self::SESSION_KEY, []);
+
+        return array_map(
+            fn($item) => $item instanceof CartItem ? $item : CartItem::fromArray($item),
+            $items
+        );
     }
 
     protected function saveItems(array $items): void
