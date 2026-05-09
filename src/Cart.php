@@ -96,7 +96,10 @@ class Cart
 
     protected function saveItems(array $items): void
     {
-        $this->session->put(self::SESSION_KEY, $items);
+        $this->session->put(self::SESSION_KEY, array_map(
+            fn(CartItem $item) => $item->toArray(),
+            $items
+        ));
     }
 
     protected function generateId(?Model $model): string
