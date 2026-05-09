@@ -17,13 +17,32 @@ class CartItem
 
     public static function fromArray(array $data): self
     {
+        $model = null;
+        if (!empty($data['model_class']) && !empty($data['model_key'])) {
+            $model = $data['model_class']::find($data['model_key']);
+        }
+
         return new self(
             id: $data['id'],
             name: $data['name'] ?? null,
             quantity: $data['quantity'],
             price: $data['price'],
+            model: $model,
             tax: $data['tax'] ?? null,
         );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'quantity'    => $this->quantity,
+            'price'       => $this->price,
+            'tax'         => $this->tax,
+            'model_class' => $this->model ? get_class($this->model) : null,
+            'model_key'   => $this->model?->getKey(),
+        ];
     }
 
     public function __serialize(): array
